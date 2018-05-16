@@ -14,12 +14,6 @@
         tools:context=".cat_info_details"
         android:paddingBottom="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Подробнее о породе"
-            android:textSize="14sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,10 +22,11 @@
             android:paddingTop="8dp">
 
             <TextView
+                android:id="@+id/headOfCats"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="@string/sp_cat_american_short"
+                tools:text="@string/sp_cat_american_short"
                 android:textSize="24sp" />
 
             <ImageView

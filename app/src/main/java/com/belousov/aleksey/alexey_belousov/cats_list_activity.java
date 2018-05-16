@@ -40,9 +40,9 @@ public class cats_list_activity extends AppCompatActivity {
         catListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View catListView, int position, long id) {
-                String catHeadText = catListView.findViewById(R.id.headTextCard).getId();
+                String catHeadText = catListView.findViewById(R.id.headTextCard).toString();
                 String catDescriptText = findViewById(R.id.secondTextCard).toString();
-                ImageView catPhotoId = findViewById(R.id.catsPhotoCard);
+                ImageView catPhotoId = findViewById(R.id.catsPhotoCard);*/
             }
         });
     }
