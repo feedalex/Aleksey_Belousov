@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,16 +27,15 @@ public class cat_details_2 extends AppCompatActivity {
     TextView secondTextDescript;
     TextView fullDescription;
     ImageView photoCat;
+    CheckBox lookedCkeckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat_details_2);
-
-        headTextDescript = findViewById(R.id.headOfCats);
-        secondTextDescript = findViewById(R.id.secondOfCats);
-        fullDescription = findViewById(R.id.fullDescriptOfCat);
+        fullDescription = findViewById(R.id.fullDescriptOfCat);//в последствии удалится из этой строки, так как будет получаться из другой активити
         share_button_email = findViewById(R.id.shareCatEmail);
+        lookedCkeckBox = findViewById(R.id.lookedCardCheck);
         //принимаем данные с предыдущей активности, расфасовываем их по соответствующим полям
         Intent intent = getIntent();
         if (intent != null) {
@@ -53,53 +53,59 @@ public class cat_details_2 extends AppCompatActivity {
         share_button_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //создание и привязка xml к диалоговому окну
-                LayoutInflater sendEmail = LayoutInflater.from(context);
-                View emailSendView = sendEmail.inflate(R.layout.email_enter_dialog, null);
-                final EditText emailTextInput = emailSendView.findViewById(R.id.emailEditText);
-                //создание диалога
-                AlertDialog.Builder emailDialogBuilder = new AlertDialog.Builder(context);
-                //указание на привязку к xml образцу
-                emailDialogBuilder.setView(emailSendView);
-                //конструктор алерта
-                emailDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                    }
-                                })
-                        .setNegativeButton("Отмена",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                final AlertDialog alertDialog = emailDialogBuilder.create();
-                alertDialog.show();
-                //изменяем обработчик кнопки ОК, чтобы при неверном вводе email диалог не закрывался
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Boolean wantToCloseDialog = false;
-                        //передаем строке значение из поля ввода email
-                        emailCatch = emailTextInput.getText().toString();
-                        //проверяем валидность вводимого Email
-                        if (isValidEmail(emailCatch)) {
-                            Toast.makeText(cat_details_2.this, "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
-                            sendEmail(emailCatch);
-                            wantToCloseDialog = true;
-                        } else {
-                            Toast.makeText(cat_details_2.this, "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
-                        }
-                        if (wantToCloseDialog)
-                            alertDialog.dismiss();
-                    }
-                });
+                shareIt();
             }
         });
     }
 
+    //делимся статьей
+    public void shareIt (){
+        //создание и привязка xml к диалоговому окну
+        LayoutInflater sendEmail = LayoutInflater.from(context);
+        View emailSendView = sendEmail.inflate(R.layout.email_enter_dialog, null);
+        final EditText emailTextInput = emailSendView.findViewById(R.id.emailEditText);
+        //создание диалога
+        AlertDialog.Builder emailDialogBuilder = new AlertDialog.Builder(context);
+        //указание на привязку к xml образцу
+        emailDialogBuilder.setView(emailSendView);
+        //конструктор алерта
+        emailDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        })
+                .setNegativeButton("Отмена",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        final AlertDialog alertDialog = emailDialogBuilder.create();
+        alertDialog.show();
+        //изменяем обработчик кнопки ОК, чтобы при неверном вводе email диалог не закрывался
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean wantToCloseDialog = false;
+                //передаем строке значение из поля ввода email
+                emailCatch = emailTextInput.getText().toString();
+                //проверяем валидность вводимого Email
+                if (isValidEmail(emailCatch)) {
+                    Toast.makeText(cat_details_2.this, "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
+                    sendEmail(emailCatch);
+                    wantToCloseDialog = true;
+                } else {
+                    Toast.makeText(cat_details_2.this, "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
+                }
+                if (wantToCloseDialog)
+                    alertDialog.dismiss();
+            }
+        });
+    }
+
+    //как раз тут реализовывается неявный интент
     public void sendEmail(String email) {
         //отправка по email
         Intent sendEmailIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -116,6 +122,7 @@ public class cat_details_2 extends AppCompatActivity {
                 "Отправка письма..."));
     }
 
+    //метод проверки email на валидность
     public final static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }

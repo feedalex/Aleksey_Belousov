@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ public class cats_list_activity extends AppCompatActivity {
     final String HEADLINE_CAT = "head";
     final String DESCRIPTION_CAT = "desc";
     final String PHOTO_CAT = "image";
+    final String CHECKBOX = "ckeck";
     String[] heads = {"Русская голубая", "Мейнкун", "Сфинкс", "Бенгальская кошка"};
     String[] descriptions = {"Красивая кошка с серой шерстью", "Поначалу они милнькие, пока не вырастают больше тебя",
             "Страшная лысая кошка. Брал крысу, оказался кот", "Я не леопард, но тоже могу сделать кусь"};
     int[] photos = {R.drawable.rus_blue_cat, R.drawable.very_big_cat, R.drawable.fuu_cat, R.drawable.bengalskaya_koshka};
+
     ListView catListView;
 
     @Override
@@ -41,11 +45,13 @@ public class cats_list_activity extends AppCompatActivity {
                 intent.putExtra(cat_details_2.EXTRA_HEAD, catHeadText);
                 intent.putExtra(cat_details_2.EXTRA_DESCRIPT, catDescriptText);
                 intent.putExtra(cat_details_2.EXTRA_IMAGE, catPhotoId);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
     }
 
+
+    //заполнение listView
     protected void catsListInit() {
         ArrayList<Map<String, Object>> catsData = new ArrayList<>(heads.length);
         Map<String, Object> catMap;
@@ -56,7 +62,7 @@ public class cats_list_activity extends AppCompatActivity {
             catMap.put(PHOTO_CAT, photos[i]);
             catsData.add(catMap);
         }
-        String[] from = {HEADLINE_CAT, DESCRIPTION_CAT, PHOTO_CAT};
+        String[] from = {HEADLINE_CAT, DESCRIPTION_CAT, PHOTO_CAT, };
         int[] to = {R.id.headTextCard, R.id.secondTextCard, R.id.catsPhotoCard};
         SimpleAdapter simpleCatAdapter = new SimpleAdapter(this, catsData, R.layout.cat_card_view, from, to);
         catListView.setAdapter(simpleCatAdapter);

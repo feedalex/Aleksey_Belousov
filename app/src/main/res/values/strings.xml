@@ -5,6 +5,8 @@
     <string name="sp_cat_american_short">Американская короткошерстная</string>
     <string name="cat_add_button_text">Добавить</string>
     <string name="weight">{0} кг </string>
+    <string name="short_description">Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие.</string>
+    <string name="loocked_check">Просмотрено</string>
     <string-array name="catAge">
         <item>1 год</item>
         <item>2 года</item>

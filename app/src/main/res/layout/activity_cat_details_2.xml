@@ -37,7 +37,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="9"
                     android:orientation="vertical"
-                    android:paddingLeft="8dp">
+                    android:paddingStart="8dp"
+                    tools:ignore="RtlSymmetry">
 
                     <TextView
                         android:id="@+id/headOfCats"
@@ -52,11 +53,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие."
+                        tools:text="@string/short_description"
                         android:textColor="@color/colorBlack"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/lookedCardCheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/loocked_check"
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/fullDescriptOfCat"
