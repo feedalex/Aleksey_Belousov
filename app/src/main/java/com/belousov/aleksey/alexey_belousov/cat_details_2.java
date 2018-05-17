@@ -11,18 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class cat_details_2 extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "id";
     final Context context = this;
+    public static final String EXTRA_HEAD = "idHead";
+    public static final String EXTRA_DESCRIPT = "idDesc";
+    public static final String EXTRA_IMAGE = "idImage";
+    public String emailCatch;
     ImageButton share_button_email;
     TextView headTextDescript;
-    TextView secoTextDescript;
+    TextView secondTextDescript;
     TextView fullDescription;
-
-    public String emailCatch;
+    ImageView photoCat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,21 @@ public class cat_details_2 extends AppCompatActivity {
         setContentView(R.layout.activity_cat_details_2);
 
         headTextDescript = findViewById(R.id.headOfCats);
-        secoTextDescript = findViewById(R.id.secondOfCats);
+        secondTextDescript = findViewById(R.id.secondOfCats);
         fullDescription = findViewById(R.id.fullDescriptOfCat);
         share_button_email = findViewById(R.id.shareCatEmail);
-
+        //принимаем данные с предыдущей активности, расфасовываем их по соответствующим полям
         Intent intent = getIntent();
         if (intent != null) {
-            String messageText = intent.getStringExtra(EXTRA_MESSAGE);
-            TextView sendHeadCatsText = findViewById(R.id.headOfCats);
-            sendHeadCatsText.setText(messageText);
+            String headMessageText = intent.getStringExtra(EXTRA_HEAD);
+            String descMessageText = intent.getStringExtra(EXTRA_DESCRIPT);
+            int imageMessageId = intent.getIntExtra(EXTRA_IMAGE, 0);
+            headTextDescript = findViewById(R.id.headOfCats);
+            secondTextDescript = findViewById(R.id.secondOfCats);
+            photoCat = findViewById(R.id.photoOfCats);
+            headTextDescript.setText(headMessageText);
+            secondTextDescript.setText(descMessageText);
+            photoCat.setImageResource(imageMessageId);
         }
 
         share_button_email.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +111,7 @@ public class cat_details_2 extends AppCompatActivity {
                 headTextDescript.getText().toString());
         //текст сообщения
         sendEmailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                secoTextDescript.getText().toString());
+                secondTextDescript.getText().toString());
         cat_details_2.this.startActivity(Intent.createChooser(sendEmailIntent,
                 "Отправка письма..."));
     }

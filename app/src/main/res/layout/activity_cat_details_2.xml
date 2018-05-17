@@ -25,6 +25,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/photoOfCats"
                     android:layout_width="40dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -51,9 +52,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
+                        android:text="Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие."
                         android:textColor="@color/colorBlack"
-                        android:textSize="12sp"
-                        android:text="Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие." />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
