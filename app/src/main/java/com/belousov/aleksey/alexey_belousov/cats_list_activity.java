@@ -40,9 +40,20 @@ public class cats_list_activity extends AppCompatActivity {
         catListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View catListView, int position, long id) {
-                String catHeadText = catListView.findViewById(R.id.headTextCard).toString();
-                String catDescriptText = findViewById(R.id.secondTextCard).toString();
+                String catHeadText = "Временный текст";
+
+                /*String catDescriptText = findViewById(R.id.secondTextCard).toString();
                 ImageView catPhotoId = findViewById(R.id.catsPhotoCard);*/
+
+                Intent intent = new Intent(cats_list_activity.this,
+                        cat_details_2.class);
+
+                intent.putExtra(cat_details_2.EXTRA_MESSAGE,
+                        catHeadText);
+
+                startActivity(intent);
+
+                Toast.makeText(cats_list_activity.this, catHeadText, Toast.LENGTH_LONG).show();
             }
         });
     }

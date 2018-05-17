@@ -1,65 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        tools:context=".cat_info_details">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:background="@drawable/rus_blue_cat"
-                android:scaleType="centerCrop" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            tools:context=".cat_info_details">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:paddingLeft="8dp"
-                android:layout_height="match_parent"
-                android:layout_weight="9"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/headOfCats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    tools:text="@string/sp_cat_american_short" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rus_blue_cat"
+                    android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/secondOfCats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="12sp"
-                    tools:text="Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие." />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:orientation="vertical"
+                    android:paddingLeft="8dp">
+
+                    <TextView
+                        android:id="@+id/headOfCats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        tools:text="@string/sp_cat_american_short" />
+
+                    <TextView
+                        android:id="@+id/secondOfCats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp"
+                        android:text="Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие." />
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/fullDescriptOfCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/cats_species_description_text"
+                android:textSize="12sp" />
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="@string/cats_species_description_text"
-            android:textSize="12sp" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/shareCatEmail"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:background="@color/cardview_shadow_end_color"
+        android:paddingBottom="8dp"
+        android:paddingEnd="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_share" />
 
-
-</ScrollView>
+</FrameLayout>
