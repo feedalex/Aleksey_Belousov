@@ -5,11 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +38,10 @@ public class cats_list_activity extends AppCompatActivity {
                 int catPhotoId = photos[position];
                 //создаем интент, передаем: заголовок, описание, id изображения
                 Intent intent = new Intent(cats_list_activity.this,
-                        cat_details_2.class);
-                intent.putExtra(cat_details_2.EXTRA_HEAD, catHeadText);
-                intent.putExtra(cat_details_2.EXTRA_DESCRIPT, catDescriptText);
-                intent.putExtra(cat_details_2.EXTRA_IMAGE, catPhotoId);
+                        cat_details.class);
+                intent.putExtra(cat_details.EXTRA_HEAD, catHeadText);
+                intent.putExtra(cat_details.EXTRA_DESCRIPT, catDescriptText);
+                intent.putExtra(cat_details.EXTRA_IMAGE, catPhotoId);
                 startActivityForResult(intent,1);
             }
         });

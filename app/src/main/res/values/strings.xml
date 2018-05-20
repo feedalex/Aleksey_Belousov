@@ -3,10 +3,13 @@
     <string name="description">Все любят котиков!</string>
     <string name="cats_species_description_text">Кот или кошка \nВыбирая домашнего питомца, вы должны решить, нужен ли вам кот или кошка. \nКоты вырастают более крупными. У взрослых котов часто образуются характерные «щеки». Кошки более привязчивы и ласковы. Впрочем, у кастрированных котов и кошек характер становится одинаково ровным.</string>
     <string name="sp_cat_american_short">Американская короткошерстная</string>
+    <string name="add_cat">Добавить питомца</string>
     <string name="cat_add_button_text">Добавить</string>
     <string name="weight">{0} кг </string>
     <string name="short_description">Полагается, что сюда будет передаваться описание о выбранной кошке. Оно будет коротким, но если будет выбиваться за пределы полей, будет многоточие.</string>
     <string name="loocked_check">Просмотрено</string>
+    <string name="share">Поделиться</string>
+    <string name="myAlphaNumeric">абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ</string>
     <string-array name="catAge">
         <item>1 год</item>
         <item>2 года</item>
@@ -19,4 +22,17 @@
         <item>9 лет</item>
         <item>10 лет</item>
     </string-array>
+    <string-array name="catWeight">
+        <item>1 кг</item>
+        <item>2 кг</item>
+        <item>3 кг</item>
+        <item>4 кг</item>
+        <item>5 кг</item>
+        <item>6 кг</item>
+        <item>7 кг</item>
+        <item>8 кг</item>
+        <item>9 кг</item>
+        <item>10 кг</item>
+    </string-array>
+
 </resources>

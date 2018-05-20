@@ -15,8 +15,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
-            tools:context=".cat_info_details">
+            android:paddingBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,9 +52,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        tools:text="@string/short_description"
                         android:textColor="@color/colorBlack"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="@string/short_description" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -64,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/loocked_check"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/fullDescriptOfCat"
@@ -73,18 +72,15 @@
                 android:paddingTop="8dp"
                 android:text="@string/cats_species_description_text"
                 android:textSize="12sp" />
+
+            <ListView
+                android:id="@+id/catList"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:paddingTop="8dp"
+                tools:ignore="NestedScrolling">
+
+            </ListView>
         </LinearLayout>
     </ScrollView>
-
-    <ImageButton
-        android:id="@+id/shareCatEmail"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|end"
-        android:background="@color/cardview_shadow_end_color"
-        android:paddingBottom="8dp"
-        android:paddingEnd="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_share" />
-
 </FrameLayout>
