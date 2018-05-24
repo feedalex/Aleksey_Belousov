@@ -37,37 +37,40 @@ public class test_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cat_news_card_view);
-
         catCardView = findViewById(R.id.car_nws_card_view);
         checkSave = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         headTextView = findViewById(R.id.cat_news_title_text);
         articleTextView = findViewById(R.id.cat_news_article);
         likeCheck = findViewById(R.id.cat_news_like_check);
         favoriteCheck = findViewById(R.id.cat_news_favorite_check);
-
-
         checkSave = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = checkSave.edit();
-
+        //проверяем состояние чекбоксов в сохраненных настройках и выставляем их при открытии активности
         if (checkSave.contains("likeChecked") && checkSave.getBoolean("likeChecked", false)) {
             likeCheck.setChecked(true);
+            likeCheck.setText("1");
         } else {
             likeCheck.setChecked(false);
+            likeCheck.setText("0");
         }
 
         if (checkSave.contains("favoriteChecked") && checkSave.getBoolean("favoriteChecked", false)) {
             favoriteCheck.setChecked(true);
+            favoriteCheck.setText("В избранном");
         } else {
             favoriteCheck.setChecked(false);
+            favoriteCheck.setText("");
         }
-
+        //при нажатии на чекбокс меняем значение и записываем в SharedPreferences
         likeCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (likeCheck.isChecked()) {
+                    likeCheck.setText("1");
                     editor.putBoolean("likeChecked", true);
                     editor.apply();
                 } else {
+                    likeCheck.setText("0");
                     editor.putBoolean("likeChecked", false);
                     editor.apply();
                 }
@@ -78,9 +81,11 @@ public class test_activity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (favoriteCheck.isChecked()) {
+                    favoriteCheck.setText("В избранном");
                     editor.putBoolean("favoriteChecked", true);
                     editor.apply();
                 } else {
+                    favoriteCheck.setText("");
                     editor.putBoolean("favoriteChecked", false);
                     editor.apply();
                 }
@@ -94,7 +99,7 @@ public class test_activity extends AppCompatActivity {
                 cat_news_article_text = articleTextView.getText().toString();
                 cat_news_like = likeCheck.isChecked();
                 cat_news_favorite = favoriteCheck.isChecked();
-                        Intent intent = new Intent(test_activity.this,
+                Intent intent = new Intent(test_activity.this,
                         cat_details.class);
                 intent.putExtra(cat_details.EXTRA_HEAD, cat_news_head_text);
                 intent.putExtra(cat_details.EXTRA_DESCRIPT, cat_news_article_text);

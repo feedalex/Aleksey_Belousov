@@ -92,7 +92,6 @@
                 android:layout_margin="4dp"
                 android:layout_weight="3"
                 android:button="@drawable/checkbox_like_selector"
-                android:text="23"
                 android:textSize="14sp" />
 
             <CheckBox
@@ -102,7 +101,6 @@
                 android:layout_margin="4dp"
                 android:layout_weight="6"
                 android:button="@drawable/checkbox_favorite_selector"
-                android:text="23"
                 android:textSize="14sp" />
 
             <TextView
