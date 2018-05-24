@@ -10,6 +10,7 @@
     <string name="loocked_check">Просмотрено</string>
     <string name="share">Поделиться</string>
     <string name="myAlphaNumeric">абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ</string>
+    <string name="temporary_text">Это временный текст большого размера. Укоротим его до 3 – 4 строк в списке статей. Полный текст будет доступен при открытии самой статьи</string>
     <string-array name="catAge">
         <item>1 год</item>
         <item>2 года</item>

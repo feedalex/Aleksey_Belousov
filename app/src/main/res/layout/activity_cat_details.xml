@@ -58,12 +58,29 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/lookedCardCheck"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/loocked_check"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/likedText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Вам понравилось"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/favoriteText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="В избранном"
+                    android:textColor="@color/colorGold"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/fullDescriptOfCat"

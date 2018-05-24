@@ -2,13 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.belousov.aleksey.alexey_belousov">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cat_icon_launcher"
         android:label="@string/app_name"
+        android:logo="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".cats_list_activity">
+
+        </activity>
+
+        <activity android:name=".cat_details" />
+        <activity android:name=".test_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,8 +25,6 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name=".cat_details"/>
 
     </application>
 

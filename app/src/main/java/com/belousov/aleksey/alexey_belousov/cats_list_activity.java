@@ -1,6 +1,9 @@
 package com.belousov.aleksey.alexey_belousov;
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +27,7 @@ public class cats_list_activity extends AppCompatActivity {
 
     ListView catListView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,7 @@ public class cats_list_activity extends AppCompatActivity {
                 intent.putExtra(cat_details.EXTRA_HEAD, catHeadText);
                 intent.putExtra(cat_details.EXTRA_DESCRIPT, catDescriptText);
                 intent.putExtra(cat_details.EXTRA_IMAGE, catPhotoId);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
     }
@@ -59,9 +63,9 @@ public class cats_list_activity extends AppCompatActivity {
             catMap.put(PHOTO_CAT, photos[i]);
             catsData.add(catMap);
         }
-        String[] from = {HEADLINE_CAT, DESCRIPTION_CAT, PHOTO_CAT, };
-        int[] to = {R.id.headTextCard, R.id.secondTextCard, R.id.catsPhotoCard};
-        SimpleAdapter simpleCatAdapter = new SimpleAdapter(this, catsData, R.layout.cat_card_view, from, to);
+        String[] from = {HEADLINE_CAT, DESCRIPTION_CAT, PHOTO_CAT,};
+        int[] to = {R.id.cat_news_title_text, R.id.cat_news_article, R.id.cat_news_head_image};
+        SimpleAdapter simpleCatAdapter = new SimpleAdapter(this, catsData, R.layout.cat_news_card_view, from, to);
         catListView.setAdapter(simpleCatAdapter);
     }
 }
