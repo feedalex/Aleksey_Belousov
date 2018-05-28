@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,18 +20,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.belousov.aleksey.alexey_belousov.models.CatNews;
+import com.belousov.aleksey.alexey_belousov.models.CatNewsList;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class cat_details extends AppCompatActivity {
+public class CatNewsDetails extends AppCompatActivity {
     final Context context = this;
-    public static final String EXTRA_HEAD = "idHead";
-    public static final String EXTRA_DESCRIPT = "idDesc";
-    public static final String EXTRA_IMAGE = "idImage";
-    public static final String EXTRA_LIKE = "idLike";
-    public static final String EXTRA_FAVORITE = "idFavorite";
     protected String emailCatch;
     protected String catName;
     protected String catAgeNum;
@@ -54,30 +48,31 @@ public class cat_details extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat_details);
+
+        int index = getIntent().getIntExtra("index", 0);
+        CatNews catNews = CatNewsList.getInsance().getCatNewsList().get(index);
+
         catAdapter = new SimpleAdapter(this, cats, android.R.layout.simple_list_item_2,
                 new String[]{"Name", "AgeWeight"},
                 new int[]{android.R.id.text1, android.R.id.text2});
         catsListView = findViewById(R.id.catList);
-        fullDescription = findViewById(R.id.fullDescriptOfCat);//в последствии удалится из этой строки, так как будет получаться из другой активити
-        //принимаем данные с предыдущей активности, расфасовываем их по соответствующим полям
-        Intent intent = getIntent();
-        if (intent != null) {
-            String headMessageText = intent.getStringExtra(EXTRA_HEAD);
-            String descMessageText = intent.getStringExtra(EXTRA_DESCRIPT);
-            Boolean likeMessageInt = intent.getBooleanExtra(EXTRA_LIKE, true);
-            Boolean favoriteMessageInt = intent.getBooleanExtra(EXTRA_FAVORITE, true);
-            likeTextView = findViewById(R.id.likedText);
-            favoriteTextView = findViewById(R.id.favoriteText);
-            headTextDescript = findViewById(R.id.headOfCats);
-            secondTextDescript = findViewById(R.id.secondOfCats);
-            headTextDescript.setText(headMessageText);
-            secondTextDescript.setText(descMessageText);
-            likeTextView.setVisibility(likeMessageInt ? View.VISIBLE : View.INVISIBLE);
-            favoriteTextView.setVisibility(favoriteMessageInt ? View.VISIBLE : View.INVISIBLE);
-
-            //int imageMessageId = intent.getIntExtra(EXTRA_IMAGE, 0);
-            //photoCat = findViewById(R.id.photoOfCats);
-            //photoCat.setImageResource(imageMessageId);
+        photoCat = findViewById(R.id.photoOfCats);
+        Picasso.get().load(catNews.getImageUrl()).into(photoCat);
+        headTextDescript = findViewById(R.id.headOfCats);
+        headTextDescript.setText(catNews.getTitle());
+        secondTextDescript = findViewById(R.id.secondOfCats);
+        secondTextDescript.setText(catNews.getArticle());
+        likeTextView = findViewById(R.id.likedText);
+        if (catNews.isLiked()){
+            likeTextView.setVisibility(View.VISIBLE);
+        } else {
+            likeTextView.setVisibility(View.INVISIBLE);
+        }
+        favoriteTextView = findViewById(R.id.favoriteText);
+        if (catNews.isFavorite()){
+            favoriteTextView.setVisibility(View.VISIBLE);
+        } else {
+            favoriteTextView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -96,9 +91,6 @@ public class cat_details extends AppCompatActivity {
                 return true;
             case R.id.action_share:
                 shareIt();
-                return true;
-            case R.id.test:
-                Toast.makeText(this, "Say^ Hello!", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -140,12 +132,12 @@ public class cat_details extends AppCompatActivity {
                 catAgeNum = catAgeInput.getSelectedItem().toString();
                 catWeightNum = catWeightInput.getSelectedItem().toString();
                 if (!(TextUtils.isEmpty(catName) || catName.length() < 3)) {
-                    Toast.makeText(cat_details.this, "У вас новый птомец: " + catName, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CatNewsDetails.this, "У вас новый птомец: " + catName, Toast.LENGTH_LONG).show();
                     addCat(catName, catAgeNum, catWeightNum);
                     wantToCloseDialog = true;
                     orientationUnlock();
                 } else {
-                    Toast.makeText(cat_details.this, "Некорректно введено имя котика!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CatNewsDetails.this, "Некорректно введено имя котика!", Toast.LENGTH_LONG).show();
                 }
                 if (wantToCloseDialog)
                     alertDialog.dismiss();
@@ -190,12 +182,12 @@ public class cat_details extends AppCompatActivity {
                 emailCatch = emailTextInput.getText().toString();
                 //проверяем валидность вводимого Email
                 if (isValidEmail(emailCatch)) {
-                    Toast.makeText(cat_details.this, "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CatNewsDetails.this, "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
                     sendEmail(emailCatch);
                     wantToCloseDialog = true;
                     orientationUnlock();
                 } else {
-                    Toast.makeText(cat_details.this, "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CatNewsDetails.this, "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
                 }
                 if (wantToCloseDialog)
                     alertDialog.dismiss();
@@ -216,7 +208,7 @@ public class cat_details extends AppCompatActivity {
         //текст сообщения
         sendEmailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                 secondTextDescript.getText().toString());
-        cat_details.this.startActivity(Intent.createChooser(sendEmailIntent,
+        CatNewsDetails.this.startActivity(Intent.createChooser(sendEmailIntent,
                 "Отправка письма..."));
     }
 

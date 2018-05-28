@@ -4,16 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cats_list_activity"
+    tools:context=".CatNewsListActivity"
     android:background="@color/colorBackground">
 
-    <ListView
-        android:id="@+id/list_view_cat_main"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cat_news_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="0dp"
-        android:divider="@color/cardview_shadow_end_color">
-
-    </ListView>
+        android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>

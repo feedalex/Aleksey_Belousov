@@ -25,15 +25,13 @@
 
                 <ImageView
                     android:id="@+id/photoOfCats"
-                    android:layout_width="40dp"
+                    android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rus_blue_cat"
                     android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:orientation="vertical"
                     android:paddingStart="8dp"
@@ -67,28 +65,25 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_like_full"
+                    android:gravity="start|center"
                     android:text="Вам понравилось"
                     android:textColor="@color/colorAccent"
-                    android:visibility="invisible" />
+                    android:textSize="14sp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/favoriteText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end"
+                    android:drawableEnd="@drawable/ic_favorite_full"
+                    android:gravity="end|center"
                     android:text="В избранном"
                     android:textColor="@color/colorGold"
-                    android:visibility="invisible" />
+                    android:textSize="14sp"
+                    android:visibility="visible" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/fullDescriptOfCat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:text="@string/cats_species_description_text"
-                android:textSize="12sp" />
 
             <ListView
                 android:id="@+id/catList"

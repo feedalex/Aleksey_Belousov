@@ -12,8 +12,4 @@
         android:id="@+id/action_share"
         android:title="@string/share"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/test"
-        android:title="Тест"
-        app:showAsAction="never"/>
 </menu>

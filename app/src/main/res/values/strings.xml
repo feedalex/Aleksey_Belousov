@@ -10,7 +10,10 @@
     <string name="loocked_check">Просмотрено</string>
     <string name="share">Поделиться</string>
     <string name="myAlphaNumeric">абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ</string>
-    <string name="temporary_text">Это временный текст большого размера. Укоротим его до 3 – 4 строк в списке статей. Полный текст будет доступен при открытии самой статьи</string>
+    <string name="temporary_text">Смешные и не очень новости про кошек.
+        Краткое описание новости будет занимать несколько строк, но мы ограничимся тремя, остальное вынесем в активность с детализацией.</string>
+    <string name="delete">Удалить</string>
+    <string name="add_bottom">Добавить вниз</string>
     <string-array name="catAge">
         <item>1 год</item>
         <item>2 года</item>
