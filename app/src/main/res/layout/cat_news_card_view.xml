@@ -92,7 +92,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="3"
                 android:button="@drawable/checkbox_like_selector"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/cat_news_favorite_check"
@@ -101,7 +101,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="6"
                 android:button="@drawable/checkbox_favorite_selector"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="В избрнное"/>
 
             <TextView
@@ -113,9 +113,9 @@
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_share"
                 android:gravity="start|center"
-                android:text="Поделиться"
+                android:text="Отправить"
                 android:textColor="@color/colorBlack"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>

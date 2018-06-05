@@ -1,18 +1,24 @@
 package com.belousov.aleksey.alexey_belousov;
 
 import android.app.AlertDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -20,6 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.belousov.aleksey.alexey_belousov.interfaces.OnSelectItemListener;
+import com.belousov.aleksey.alexey_belousov.interiorFragments.ImageViewFragment;
+import com.belousov.aleksey.alexey_belousov.interiorFragments.ListViewFragment;
+import com.belousov.aleksey.alexey_belousov.interiorFragments.TextFragment;
 import com.belousov.aleksey.alexey_belousov.models.CatNews;
 import com.belousov.aleksey.alexey_belousov.models.CatNewsList;
 import com.squareup.picasso.Picasso;
@@ -27,8 +37,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CatNewsDetails extends AppCompatActivity {
-    final Context context = this;
+public class CatNewsDetailsFragment extends Fragment {
+    final Context context = getActivity();
+    public static final String INDEX = "INDEX";
+    public static final String IMAGE = "IMAGE";
+    public static final String TEXT = "TEXT";
+    public boolean showFragment;
+    ImageViewFragment imgFragment = null;
+    TextFragment textFragment = null;
     protected String emailCatch;
     protected String catName;
     protected String catAgeNum;
@@ -36,65 +52,130 @@ public class CatNewsDetails extends AppCompatActivity {
     ListView catsListView;
     TextView headTextDescript;
     TextView secondTextDescript;
-    TextView fullDescription;
     TextView likeTextView;
     TextView favoriteTextView;
     ImageView photoCat;
     SimpleAdapter catAdapter;
     ArrayList<HashMap<String, String>> cats = new ArrayList<>();
     HashMap<String, String> catMap;
+    OnSelectItemListener callbackActivity;
+    int listIndex;
+    FrameLayout frameLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        callbackActivity = (OnSelectItemListener) context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cat_details);
+        listIndex = getArguments().getInt(INDEX);
+    }
 
-        int index = getIntent().getIntExtra("index", 0);
-        CatNews catNews = CatNewsList.getInsance().getCatNewsList().get(index);
+    public static CatNewsDetailsFragment newInstance(int workoutIndex) {
+        CatNewsDetailsFragment fragment = new CatNewsDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt(INDEX, workoutIndex);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-        catAdapter = new SimpleAdapter(this, cats, android.R.layout.simple_list_item_2,
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        View view = inflater.inflate(R.layout.cat_details_fragment, container, false);
+        initUI(view);
+        initTextFragment();
+        //initImageFragment();
+        return view;
+    }
+
+    public void initUI(View v) {
+        frameLayout = v.findViewById(R.id.iteriorContainer);
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showFragment) {
+                    initTextFragment();
+                } else {
+                    initImageFragment();
+                }
+            }
+        });
+        CatNews catNews = CatNewsList.getInsance().getCatNewsList().get(listIndex);
+        catAdapter = new SimpleAdapter(getActivity(), cats, android.R.layout.simple_list_item_2,
                 new String[]{"Name", "AgeWeight"},
                 new int[]{android.R.id.text1, android.R.id.text2});
-        catsListView = findViewById(R.id.catList);
-        photoCat = findViewById(R.id.photoOfCats);
+        catsListView = v.findViewById(R.id.catList);
+        photoCat = v.findViewById(R.id.photoOfCats);
         Picasso.get().load(catNews.getImageUrl()).into(photoCat);
-        headTextDescript = findViewById(R.id.headOfCats);
+        headTextDescript = v.findViewById(R.id.headOfCats);
         headTextDescript.setText(catNews.getTitle());
-        secondTextDescript = findViewById(R.id.secondOfCats);
+        secondTextDescript = v.findViewById(R.id.secondOfCats);
         secondTextDescript.setText(catNews.getArticle());
-        likeTextView = findViewById(R.id.likedText);
-        if (catNews.isLiked()){
+        likeTextView = v.findViewById(R.id.likedText);
+        if (catNews.isLiked()) {
             likeTextView.setVisibility(View.VISIBLE);
         } else {
             likeTextView.setVisibility(View.INVISIBLE);
         }
-        favoriteTextView = findViewById(R.id.favoriteText);
-        if (catNews.isFavorite()){
+        favoriteTextView = v.findViewById(R.id.favoriteText);
+        if (catNews.isFavorite()) {
             favoriteTextView.setVisibility(View.VISIBLE);
         } else {
             favoriteTextView.setVisibility(View.INVISIBLE);
         }
     }
 
+    private void initTextFragment() {
+        FragmentManager fm = getChildFragmentManager();
+        textFragment = new TextFragment();
+        fm.beginTransaction()
+                .setCustomAnimations(
+                        R.animator.flip_right_enter,
+                        R.animator.flip_right_exit,
+                        R.animator.flip_left_enter,
+                        R.animator.flip_left_exit)
+                .replace(R.id.iteriorContainer, textFragment, TEXT)
+                .commit();
+        showFragment = false;
+    }
+
+    private void initImageFragment() {
+        FragmentManager fm = getChildFragmentManager();
+        imgFragment = new ImageViewFragment();
+        fm.beginTransaction()
+                .setCustomAnimations(
+                        R.animator.flip_right_enter,
+                        R.animator.flip_right_exit,
+                        R.animator.flip_left_enter,
+                        R.animator.flip_left_exit)
+                .replace(R.id.iteriorContainer, imgFragment, IMAGE)
+                .commit();
+        showFragment = true;
+    }
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_descriptoon, menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_descriptoon, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id_menu = item.getItemId();
-        switch (id_menu) {
+        switch (item.getItemId()) {
             case R.id.action_add_cat:
-                addNewCat();
+                //((MainActivity) Objects.requireNonNull(getActivity())).listFragment();
+                //listFragment();
                 return true;
             case R.id.action_share:
                 shareIt();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return super.onContextItemSelected(item);
     }
 
     //вводим данные нового питомца
@@ -132,12 +213,12 @@ public class CatNewsDetails extends AppCompatActivity {
                 catAgeNum = catAgeInput.getSelectedItem().toString();
                 catWeightNum = catWeightInput.getSelectedItem().toString();
                 if (!(TextUtils.isEmpty(catName) || catName.length() < 3)) {
-                    Toast.makeText(CatNewsDetails.this, "У вас новый птомец: " + catName, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "У вас новый птомец: " + catName, Toast.LENGTH_LONG).show();
                     addCat(catName, catAgeNum, catWeightNum);
                     wantToCloseDialog = true;
                     orientationUnlock();
                 } else {
-                    Toast.makeText(CatNewsDetails.this, "Некорректно введено имя котика!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Некорректно введено имя котика!", Toast.LENGTH_LONG).show();
                 }
                 if (wantToCloseDialog)
                     alertDialog.dismiss();
@@ -182,12 +263,12 @@ public class CatNewsDetails extends AppCompatActivity {
                 emailCatch = emailTextInput.getText().toString();
                 //проверяем валидность вводимого Email
                 if (isValidEmail(emailCatch)) {
-                    Toast.makeText(CatNewsDetails.this, "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Отправка письма на " + emailCatch, Toast.LENGTH_LONG).show();
                     sendEmail(emailCatch);
                     wantToCloseDialog = true;
                     orientationUnlock();
                 } else {
-                    Toast.makeText(CatNewsDetails.this, "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Некорректно введен email получателя!", Toast.LENGTH_LONG).show();
                 }
                 if (wantToCloseDialog)
                     alertDialog.dismiss();
@@ -208,7 +289,7 @@ public class CatNewsDetails extends AppCompatActivity {
         //текст сообщения
         sendEmailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                 secondTextDescript.getText().toString());
-        CatNewsDetails.this.startActivity(Intent.createChooser(sendEmailIntent,
+        CatNewsDetailsFragment.this.startActivity(Intent.createChooser(sendEmailIntent,
                 "Отправка письма..."));
     }
 
@@ -229,17 +310,11 @@ public class CatNewsDetails extends AppCompatActivity {
     //программная блокировка ориентации экрана
     public void orientationLock() {
         int currentOrientation = this.getResources().getConfiguration().orientation;
-        this.setRequestedOrientation(currentOrientation);
+        getActivity().setRequestedOrientation(currentOrientation);
     }
 
     //разблокировка
     public void orientationUnlock() {
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
-
-    //запись в файл
-    protected void writeCatsToFile(String name, String age, String weight) {
-
-    }
-
 }

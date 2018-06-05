@@ -2,9 +2,9 @@ package com.belousov.aleksey.alexey_belousov;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,8 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.belousov.aleksey.alexey_belousov.interfaces.OnSelectItemListener;
 import com.belousov.aleksey.alexey_belousov.models.CatNews;
 import com.belousov.aleksey.alexey_belousov.models.CatNewsList;
 import com.squareup.picasso.Picasso;
@@ -27,19 +27,40 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 import java.util.List;
 
-public class CatNewsListActivity extends AppCompatActivity {
+public class CatNewsListFragment extends Fragment {
     private RecyclerView recyclerView;
     private CatNewsAdapter catNewsAdapter;
+    OnSelectItemListener callbackActivity;
 
+    public void refreshList() {
+        catNewsAdapter.notifyDataSetChanged();
+    }
+
+    //обязательно
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.cat_news_list_activity);
-        recyclerView = findViewById(R.id.cat_news_recycler_view);
-        catNewsAdapter = new CatNewsAdapter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        callbackActivity = (OnSelectItemListener) context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.cat_news_list_fragment, container, false);
+
+        recyclerView = view.findViewById(R.id.cat_news_recycler_view);
+        catNewsAdapter = new CatNewsAdapter(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(catNewsAdapter);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        catNewsAdapter.notifyDataSetChanged();
     }
 
     private class CatNewsAdapter extends RecyclerView.Adapter<CatNewsViewHolder> {
@@ -69,9 +90,7 @@ public class CatNewsListActivity extends AppCompatActivity {
             holder.listItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, CatNewsDetails.class);
-                    intent.putExtra("index", holder.getAdapterPosition());
-                    startActivity(intent);
+                    callbackActivity.OnSelectItem(holder.getAdapterPosition());
                 }
             });
             holder.listItem.setOnLongClickListener(new View.OnLongClickListener() {
@@ -105,6 +124,7 @@ public class CatNewsListActivity extends AppCompatActivity {
                         holder.likeCheckBox.setText(Integer.toString(i));
                         holder.likeCheckBox.setChecked(catNews.setLiked(false));
                     }
+                    callbackActivity.OnSelectItem(holder.getAdapterPosition());
                 }
             });
             holder.favoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -116,6 +136,7 @@ public class CatNewsListActivity extends AppCompatActivity {
                     } else {
                         holder.favoriteCheckBox.setChecked(catNews.setFavorite(false));
                     }
+                    callbackActivity.OnSelectItem(holder.getAdapterPosition());
                 }
             });
         }
@@ -136,6 +157,7 @@ public class CatNewsListActivity extends AppCompatActivity {
 
         public void deleteItem(int index) {
             catNewsList.remove(index);
+            callbackActivity.OnSelectItem(index);
             notifyItemRemoved(index);
         }
 

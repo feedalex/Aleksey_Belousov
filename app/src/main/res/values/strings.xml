@@ -14,6 +14,8 @@
         Краткое описание новости будет занимать несколько строк, но мы ограничимся тремя, остальное вынесем в активность с детализацией.</string>
     <string name="delete">Удалить</string>
     <string name="add_bottom">Добавить вниз</string>
+    <integer name="card_flip_duration_full">1000</integer>
+    <integer name="card_flip_duration_half">500</integer>
     <string-array name="catAge">
         <item>1 год</item>
         <item>2 года</item>

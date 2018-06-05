@@ -19,7 +19,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -85,14 +85,11 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/catList"
+            <FrameLayout
+                android:id="@+id/iteriorContainer"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:paddingTop="8dp"
-                tools:ignore="NestedScrolling">
+                android:layout_height="300dp"/>
 
-            </ListView>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
